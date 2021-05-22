@@ -1,0 +1,71 @@
+{%extends 'index.html'%}
+{% block body %}
+    <div class="container font-weight-bold text-center">
+        <h1 class="text-center text-danger">THANH TOÁN</h1>
+        <div class="text-white">__________________________</div>
+<h4 class="text-right">
+     <a class="btn btn-primary" href="{{url_for('index')}}">Đặt thêm phòng</a>
+</h4>
+        <table class="table table-bordered rounded table-hover text-center">
+            <tr>
+                <th>Id</th>
+                <th>Tên phòng</th>
+                <th>Giá</th>
+                <th>Số ngày thuê</th>
+                <th>Số khách</th>
+                <th>Khách nước ngoài</th>
+                <th>Thành tiền</th>
+            </tr>
+            {% if 'cart' in session %}
+            {% for r in session['cart'].values() %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.name }}</td>
+                <td>{{ r.price }}</td>
+                {% if r.date > 0 %}
+                <td>{{ r.date }}</td>
+                {% else %}
+                <td class="text-danger">Ngày đặt không hợp lệ</td>
+                {% endif %}
+                <td>
+                    {% if r.quantity > 0 %}
+                    <div>{{ r.quantity }}</div>
+                    {% else %}
+                    <div class="text-danger">Vượt số lượng khách</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if r.is_foreign == True %}
+                        Có
+                    {% else %}
+                        Không
+                    {% endif %}
+                </td>
+                {% if r.total > 0 %}
+                <td class="font-weight-bold">{{ "{:,}".format(r.total) }} VNĐ</td>
+                {% else %}
+                <td class="text-danger">Đặt phòng không hợp lệ</td>
+                {% endif %}
+                <td> <a onclick="delCart({{ r.id }})" class="btn btn-danger">Xóa</a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <td colspan="7">Hiện chưa có thông tin phòng cần đặt...</td>
+            {% endif %}
+        </table>
+             <div class="badge badge-warning">
+                <h4>Tổng tiền:</h4>
+                <h4>{{ "{:,}".format(cart_info.sum_total) }} VNĐ</h4>
+            </div>
+            <br>
+            <br>
+            <div class="text-center">
+                    <input type="button"
+                       value="Thanh toán"
+                       class="btn btn-danger btn-lg"
+                           onclick="pay()"/>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

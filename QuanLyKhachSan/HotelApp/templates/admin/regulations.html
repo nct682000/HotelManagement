@@ -1,0 +1,79 @@
+{% extends 'admin/index.html' %}
+
+{% block body %}
+    {% if current_user.is_authenticated %}
+   <h1 class="text-center text-danger">WELCOME TO ADMIN PAGE!!!</h1>
+        <h5 class="text-right text-danger">Đã đăng nhập bằng quyền
+            {% if current_user.is_admin == True %}
+            ADMIN
+            {% else %}
+            USER
+            {% endif %}
+        </h5>
+        <h5 class="text-right text-danger">{{current_user.name}}</h5>
+        <br>
+    {%block index %}
+     <div class="row">
+           <div class="col-md-3">
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Thuê phòng tại sảnh</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/checkin">Thực hiện</a> </div>
+                </div>
+                <br>
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Thuê phòng đặt trước</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/echeckin">Thực hiện</a> </div>
+                </div>
+                <br>
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Trả phòng</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/checkout">Thực hiện</a> </div>
+                </div>
+                <br>
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Thay đổi quy định</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <div class="btn bg-primary text-white">Thực hiện</div> </div>
+                </div>
+           </div>
+           <div class="col-md-9 border border-success rounded ">
+               <div>Thay đổi đơn giá: </div>
+               <select>
+                   {% for c in cate %}
+                   <option>{{ c.name }}</option>
+                   {% endfor %}
+               </select>
+               <div><input type="number" id="reg_price" name="reg_price" value="0" min="0"></div>
+               <div><input type="submit" value="Thay đổi" onclick="reg_price()"></div>
+               <br>
+               <br>
+               <form action="{{ url_for('regulations') }}" method="post">
+                    <div>Thay đổi phụ thu: </div>
+                   <input type="text" value="0" min="0" name="surcharge">
+                   <input type="submit" value="Thay đổi">
+               </form>
+                <br>
+                 <form action="{{ url_for('regulations') }}" method="post">
+                    <div>Thay đổi tăng phí khách nước ngoài: </div>
+                   <input type="text" value="0" min="0" name="increase">
+                   <input type="submit" value="Thay đổi">
+               </form>
+               <br>
+                 <form action="{{ url_for('regulations') }}" method="post">
+                    <div>Thay đổi số khách tối đa: </div>
+                   <input type="number" value="0" min="0" name="max">
+                   <input type="submit" value="Thay đổi">
+               </form>
+           </div>
+
+
+     </div>
+    {% endblock %}
+    {% else %}
+        {% include "admin/login.html" %}
+    {% endif %}
+
+{% endblock %}

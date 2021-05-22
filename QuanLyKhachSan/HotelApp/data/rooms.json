@@ -1,0 +1,22 @@
+[{
+ "id": 1,
+ "name": "Phòng 001",
+ "description": "Nhỏ, 15m2, 1 Giường, Quạt máy",
+ "price": 150000 ,
+ "image": "images/a.jpg",
+ "category_id":1
+}, {
+ "id": 2,
+ "name": "Phòng 002",
+ "description": "Lớn, 25m2, 2 Giường, Máy lạnh",
+ "price": 200000,
+ "image": "images/b.jpg",
+ "category_id": 2
+}, {
+ "id": 3,
+ "name": "Phòng 003",
+ "description": "Vừa, 20m2, 1 Giường, Máy lạnh",
+ "price": 170000,
+ "image": "images/c.jpg",
+ "category_id": 3
+}]

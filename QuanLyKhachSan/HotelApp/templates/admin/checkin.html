@@ -1,0 +1,85 @@
+{% extends 'admin/index.html' %}
+
+{% block body %}
+    {% if current_user.is_authenticated %}
+   <h1 class="text-center text-danger">WELCOME TO ADMIN PAGE!!!</h1>
+        <h5 class="text-right text-danger">Đã đăng nhập bằng quyền
+            {% if current_user.is_admin == True %}
+            ADMIN
+            {% else %}
+            USER
+            {% endif %}
+        </h5>
+        <h5 class="text-right text-danger">{{current_user.name}}</h5>
+        <br>
+    {%block index %}
+     <div class="row">
+           <div class="col-md-3">
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Thuê phòng tại sảnh</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <div class="btn bg-primary text-white">Thực hiện</div> </div>
+                </div>
+                <br>
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Thuê phòng đặt trước</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/echeckin">Thực hiện</a> </div>
+                </div>
+                <br>
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Trả phòng</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/checkout">Thực hiện</a> </div>
+                </div>
+
+                {% if current_user.is_admin == True %}
+                <br>
+                <div class=" border border-primary rounded" style="width:200px">
+                    <h6 class="text-center font-weight-bold">Thay đổi quy định</h6>
+                    <p class="text-center">Text</p>
+                    <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/regulations">Thực hiện</a> </div>
+                </div>
+               {% endif %}
+           </div>
+           <div class="col-md-9 border border-success rounded ">
+                   <table class="table text-center">
+                        <tr>
+                            <th></th>
+                            <th>Mã phòng</th>
+                            <td>Số phòng</td>
+                            <td>Giá</td>
+                            <td>Tình trạng</td>
+                        </tr>
+                            {% for r in rooms %}
+                                <tr>
+                                    <td>
+                                        <img width="50" alt="{{ r[0].name }}" src="{{url_for('static', filename=r.image)}}" />
+                                    </td>
+                                    <td>{{ r[0].id }}</td>
+
+                                    <td>
+                                        <a href="{{ url_for('room_detail',room_id = r[0].id) }}" class="text-danger">{{r[0].name}}</a>
+                                    </td>
+
+                                    <td>{{ "{:,}".format(r.price) }} VNĐ</td>
+
+                                    {% if r[0].active != True %}
+                                    <td>Phòng còn trống</td>
+                                    <td>
+                                        <input type="button" value="Thuê phòng" onclick="changeActive({{r[0].id}})" class="btn btn-danger">
+                                    </td>
+                                    {% else %}
+                                    <td class="text-danger">Phòng đã đặt</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                   </table>
+           </div>
+     </div>
+    {% endblock %}
+    {% else %}
+        {% include "admin/login.html" %}
+    {% endif %}
+
+{% endblock %}

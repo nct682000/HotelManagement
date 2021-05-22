@@ -1,0 +1,70 @@
+{% extends 'admin/master.html' %}
+
+{% block title %}
+Quản lý khách sạn
+{% endblock %}
+
+{% block head_css %}
+    {{  super() }}
+    <link href="{{ url_for('static', filename='css/style1.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
+        {% block body %}
+            {% if current_user.is_authenticated %}
+            <h1 class="text-center text-danger">WELCOME TO ADMIN PAGE!!!</h1>
+            <h5 class="text-right text-danger">Đã đăng nhập bằng quyền
+                {% if current_user.is_admin == True %}
+                ADMIN
+                {% else %}
+                USER
+                {% endif %}
+            </h5>
+            <h5 class="text-right text-danger">{{current_user.name}}</h5>
+            <br>
+            {%block index %}
+             <div class="row">
+                   <div class="col-md-5">
+                        <div class=" border border-primary rounded" style="width:400px">
+                            <h6 class="text-center font-weight-bold">Thuê phòng tại sảnh</h6>
+                            <p class="text-center">Text</p>
+                            <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/checkin">Thực hiện</a> </div>
+                        </div>
+                        <br>
+                        <div class=" border border-primary rounded" style="width:400px">
+                            <h6 class="text-center font-weight-bold">Thuê phòng đặt trước</h6>
+                            <p class="text-center">Text</p>
+                            <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/echeckin">Thực hiện</a> </div>
+                        </div>
+                        <br>
+                        <div class=" border border-primary rounded" style="width:400px">
+                            <h6 class="text-center font-weight-bold">Trả phòng</h6>
+                            <p class="text-center">Text</p>
+                            <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/checkout">Thực hiện</a> </div>
+                        </div>
+
+                       {% if current_user.is_admin == True %}
+                       <br>
+                        <div class=" border border-primary rounded" style="width:400px">
+                            <h6 class="text-center font-weight-bold">Thay đổi quy định</h6>
+                            <p class="text-center">Text</p>
+                            <div class="text-center"> <a class="btn btn-outline-primary" href="/admin/regulations">Thực hiện</a> </div>
+                        </div>
+                       {% endif %}
+                   </div>
+                   <div class="col-md-7 border border-danger rounded">
+                       <br>
+                       <br>
+                       <br>
+                       <br>
+                       <br>
+                       <br>
+                       <h1 class="text-center">Hãy chọn tác vụ...</h1>
+                   </div>
+               </div>
+            {% endblock %}
+            {% else %}
+                {% include 'admin/login.html' %}
+            {% endif %}
+
+        {% endblock %}
+

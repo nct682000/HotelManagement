@@ -1,0 +1,201 @@
+<head>
+    <meta charset="UTF-8">
+
+    <title>My Hotel</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{url_for('static', filename='css/style2.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+          <a class="navbar-brand" href="#">Logoooo</a>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                  <a class=" btn btn-outline-danger" href="{{ url_for('index') }}"><h5 class="font-weight-bold">My Hotel</h5> </a>
+              </li>
+
+               <li class="nav-item">
+                  <a class=" btn btn-outline-info" href="{{ url_for('contact') }}"><h5 class="font-weight-bold">Về chúng tôi</h5> </a>
+              </li>
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Nhập số phòng" name="kw">
+              <button class="btn btn-danger my-2 my-sm-0" type="submit">Tìm phòng</button>
+            </form>
+          </div>
+        </nav>
+    </div>
+
+{% block body %}
+    <div class="container">
+        <br>
+        <h5 text-center >
+        <ul class="nav nav-tabs">
+
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="{{url_for('index')}}">Tất cả</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="{{url_for('index', active = false)}}">Phòng còn trống</a>
+          </li>
+
+          {% for c in category %}
+            <li class="nav-item">
+                <a class="nav-link text-danger" href="{{url_for('index', category_id = c.id)}}">{{c.name}}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        </h5>
+        <table class="table font-weight-bold text-center">
+            <tr>
+                <th></th>
+                <th>Số phòng</th>
+                <td>Loại</td>
+                <td>Giá</td>
+                <td> </td>
+            </tr>
+            {% for r in rooms %}
+                <tr>
+                    <td>
+                        <img width="150" alt="{{ r[0].name }}" src="{{ url_for('static', filename = r.image) }}" />
+                    </td>
+                    <td>{{ r[0].name }}</td>
+
+                    <td>{{ r.name }}</td>
+
+                    <td>{{ "{:,}".format(r.price) }} VNĐ</td>
+
+                    {% if r[0].active != True %}
+                        <td>
+                            <a href="{{ url_for('room_detail',room_id = r[0].id) }}" class="btn btn-danger">Xem chi tiết</a>
+                        </td>
+                    {% else %}
+                        <td class="text-danger">Phòng đã đặt</td>
+                    {% endif %}
+                </tr>
+
+            {% endfor %}
+       </table>
+    </div>
+{% endblock %}
+
+
+
+<!-- Footer -->
+<footer class="page-footer font-small mdb-color lighten-3 pt-4">
+
+  <!-- Footer Links -->
+  <div class="container text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+
+        <!-- Content -->
+        <h5 class="font-weight-bold text-uppercase mb-4">My Hotel</h5>
+          <p>Là một trong những khách sạn uy tín, chất lượng nhất khu vực...</p>
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+        <!-- Links -->
+        <h5 class="font-weight-bold text-uppercase mb-4">Dịch vụ</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <p>
+              Sạch sẽ
+            </p>
+          </li>
+          <li>
+            <p>
+              Thoáng mát
+            </p>
+          </li>
+          <li>
+            <p>
+              Tiện nghi
+            </p>
+          </li>
+          <li>
+            Chuyên nghiệp
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+        <!-- Contact details -->
+        <h5 class="font-weight-bold text-uppercase mb-4">Liên hệ</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <p>
+              <i class="fas fa-home mr-3"></i> Gò Vấp, Tp.HCM</p>
+          </li>
+          <li>
+            <p>
+              <i class="fas fa-envelope mr-3"></i> 1851050000abcxyz@ou.edu.vn</p>
+          </li>
+          <li>
+            <p>
+              <i class="fas fa-phone mr-3"></i> 0123 456 789  </p>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
+
+        <!-- Social buttons -->
+        <h5 class="font-weight-bold text-uppercase mb-4">Theo dõi</h5>
+
+        <!-- Facebook -->
+        <a type="button" class="btn-floating btn-fb">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <!-- Twitter -->
+        <a type="button" class="btn-floating btn-tw">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <!-- Google +-->
+        <a type="button" class="btn-floating btn-gplus">
+          <i class="fab fa-google-plus-g"></i>
+        </a>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="#"> MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>

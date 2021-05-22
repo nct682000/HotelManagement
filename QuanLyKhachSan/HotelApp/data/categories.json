@@ -1,0 +1,16 @@
+[
+  {
+  "id" : 1,
+  "name" : "Phòng loại A"
+  },
+
+  {
+  "id" : 2,
+  "name" : "Phòng loại B"
+  },
+  {
+  "id" : 3,
+  "name" : "Phòng loại C"
+  }
+]
+

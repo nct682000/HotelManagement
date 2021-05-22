@@ -1,0 +1,118 @@
+{% extends 'index.html' %}
+{% block body %}
+<form action="{{ url_for('add_to_cart') }}" method="post">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <h3 class=" text-danger col-md-6 font-italic">Thông tin phòng</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <img alt="{{room.name}}" src="{{url_for('static', filename=room.image)}}" width="300" height="200" />
+            </div>
+            <div class="col-md-5">
+                    <ul style="list-style-type:none">
+                        <li><span class="font-weight-bold">Số phòng: </span>{{ room[0].name }}</li>
+                        <li><span class="font-weight-bold">Mô tả: </span>{{ room.description }}
+                            <div>
+                            Được thiết kế cho cả các chuyến du lịch nghỉ ngơi và công tác,
+                            My Hotel tọa lạc tại vị trí lí tưởng ở Quận 1-TP. HCM;
+                            một trong những khu vực nổi tiếng của thành phố. Tọa lạc ở vị trí chỉ cách trung tâm thành phố 0.5 km,
+                            khách hàng sẽ có được chỗ ở tốt để tận hưởng các điểm thú vị và hoạt động nổi tiếng ở đây.
+                            Như một thiên đường nghỉ dưỡng và thư giãn, khách sạn mang lại sự đổi mới hoàn toàn
+                            so với những điểm thú vị trong thành phố như chợ Bến Thành,....
+                            </div>
+                        </li>
+                        <li><span class="font-weight-bold">Giá thuê 1 ngày: </span>{{ "{:,}".format(room.price) }} VNĐ </li>
+                    </ul>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5 class="bg-light text-danger">Cam kết phòng chất lượng như hình</h5>
+                <br>
+                <div>Đầy đủ:</div>
+                <div class="row ">
+                    <div class="col-md-4 border">Wifi tốc độ cao</div>
+                    <div class="col-md-4 border">Truyền hình cáp</div>
+                    <div class="col-md-4 border">Máy nước nóng</div>
+                </div>
+
+            </div>
+        </div>
+        <input style="background-color:transparent" type="hidden" value="{{room.price}}" name="price" />
+        <input style="background-color:transparent" type="hidden" value="{{room[0].name}}" name="name" />
+        <input style="background-color:transparent" type="hidden" value="{{room[0].id}}" name="id" />
+        <br>
+        <div class="row">
+            <h3 class="text-danger col-md-9 font-italic">Đặt phòng</h3>
+            <h4 class="text-danger col-md-3 font-italic">Thông tin khách hàng</h4>
+        </div>
+
+
+            <div class="row font-weight-bold">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="local">Số khách trong nước:</label>
+                        <input class="form-control"
+                               type="number"
+                               id="local"
+                               min="0"
+                               name="local" value="1">
+                    </div>
+
+                     <div class="form-group">
+                         <label for="foreign">Số khách nước ngoài:</label>
+                         <input class="form-control"
+                                type="number"
+                                id="foreign"
+                                min="0"
+                                name="foreign" value="0">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="in_date">Ngày nhận phòng:</label>
+                        <input class="form-control"
+                               type="date"
+                               id="in_date"
+                               name="in_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="out_date">Ngày trả phòng:</label>
+                        <input class="form-control"
+                               type="date"
+                               id="out_date"
+                               name="out_date" required >
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Họ tên:</label>
+                        <input type="text"
+                               class="form-control"
+                               name="guest"
+                               id="guest" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Số điện thoại:</label>
+                        <input type="text"
+                               class="form-control"
+                               name="phone"
+                               id="phone" required>
+                    </div>
+
+                </div>
+            </div>
+            <div class="text-center">
+                  <input class=" btn btn-lg btn-danger"
+                         type="submit" value="Thanh toán" />
+            </div>
+
+
+    </div>
+</form>
+{% endblock %}
